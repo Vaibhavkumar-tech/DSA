@@ -1,27 +1,20 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-
         int n = nums.size();
-
         int jumps = 0;
-        int currEnd = 0;
-        int farthest = 0;
-
-        for(int i = 0; i < n - 1; i++) {
-
-            // Find farthest reachable index
-            farthest = max(farthest, i + nums[i]);
-
-            // Current jump range finished
-            if(i == currEnd) {
-
-                jumps++;
-
-                currEnd = farthest;
+        int l=0;
+        int r=0;
+        int jump=0;
+        while(r<n-1){
+            int farthest=0;
+            for(int i=l;i<=r;i++){
+                farthest=max(farthest,nums[i]+i);
             }
+            l=r+1;
+            r=farthest;
+            jump++;
         }
-
-        return jumps;
+        return jump;
     }
 };
