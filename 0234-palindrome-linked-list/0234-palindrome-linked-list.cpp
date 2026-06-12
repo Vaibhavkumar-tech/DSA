@@ -26,12 +26,16 @@ public:
         ListNode* slow=head;
 
         //even mein 2 hota mid then mid2 chahiye
-        while(fast->next!=NULL && fast->next->next!=NULL){
-            fast=fast->next->next;
-            slow=slow->next;
+        while(fast != NULL && fast->next != NULL){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        // odd length ke liye
+        if(fast != NULL){
+            slow = slow->next;
         }
         //mid se reverse kr do means half-half kr diye then dono same hona chahiye
-        ListNode* tail=reverse(slow->next);
+        ListNode* tail=reverse(slow);
         ListNode* temp=head;
         while(tail!=NULL){
             if(temp->val!=tail->val){
