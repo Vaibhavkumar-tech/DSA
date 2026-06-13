@@ -3,14 +3,14 @@ public:
     int strStr(string haystack, string needle) {
         int n=haystack.size();
         int m=needle.size();
-        int l=0;
-        int r=m-1;
-        while(r<n){
-            if(haystack.substr(l,m)==needle){
+        for(int l=0;l<=n-m;l++){
+            int r=0;
+            while(r<m && haystack[l+r]==needle[r]){
+                r++;
+            }
+            if(r==m){
                 return l;
             }
-            l++;
-            r++;
         }
         return -1;
     }
