@@ -3,14 +3,13 @@ public:
     int findDuplicate(vector<int>& nums) {
         int n=nums.size();
         int ans=-1;
-        map<int,int>mp;
+        vector<int>freq(n+1,0);
         for(int i=0;i<n;i++){
-            mp[nums[i]]++;
-        }
-        for(auto val:mp){
-            if(val.second>1){
-                ans=val.first;
-               return ans;
+            int number=nums[i];
+            freq[number]++;
+            if(freq[number]>1){
+                ans=number;
+                return ans;
             }
         }
         return ans;
