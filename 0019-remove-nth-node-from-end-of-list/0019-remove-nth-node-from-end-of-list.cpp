@@ -16,8 +16,11 @@ public:
         for(int i=0;i<n;i++){
             fast=fast->next;
         }
-        if(fast==NULL){
-            return head->next;
+        if(fast==NULL){  //n timers move kiya aur woh null aa gya
+            ListNode* del=head;
+            head=head->next;
+            delete(del);
+            return head;
         }
         while(fast->next!=NULL){
             fast=fast->next;
