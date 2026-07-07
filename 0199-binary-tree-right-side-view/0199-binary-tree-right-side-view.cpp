@@ -14,22 +14,19 @@ public:
     vector<int> rightSideView(TreeNode* root) {
         vector<int>ans;
         if(root==NULL) return ans;
-        queue<pair<TreeNode*,int>>q;
-        map<int,int>mp;
-        q.push({root,0});
+        queue<TreeNode*>q;
+        q.push({root});
         while(!q.empty()){
-            auto it=q.front();
-            q.pop();
-            int line=it.second;
-            TreeNode* node=it.first;
-            if(mp.find(line)==mp.end()){
-                mp[line]=node->val;
+            int n=q.size();
+            for(int i=0;i<n;i++){
+                TreeNode* node=q.front();
+                q.pop();
+                if(i==0){  //right wla ya woh dekh rha tha
+                  ans.push_back(node->val);
+                }
+                if(node->right!=NULL) q.push(node->right);
+                if(node->left!=NULL) q.push(node->left);
             }
-            if(node->right!=NULL) q.push({node->right,line+1});
-            if(node->left!=NULL) q.push({node->left,line+1});
-        }
-        for(auto val:mp){
-            ans.push_back(val.second);
         }
         return ans;
     }
