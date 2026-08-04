@@ -20,7 +20,6 @@ public:
         reverse = isReverse;
         pushAll(root);
     }
-
     bool hasNext() {
         return !st.empty();
     }
@@ -30,10 +29,9 @@ public:
         st.pop();
 
         if (!reverse)
-            pushAll(node->right);   // inorder
+            pushAll(node->right);   // before
         else
-            pushAll(node->left);    // reverse inorder
-
+            pushAll(node->left);    // next
         return node->val;
     }
 
@@ -41,7 +39,6 @@ private:
     void pushAll(TreeNode* node) {
         while (node) {
             st.push(node);
-
             if (!reverse)
                 node = node->left;
             else
@@ -56,24 +53,19 @@ public:
 
         if (!root) return false;
 
-        BSTIterator left(root, false);   // smallest iterator
-        BSTIterator right(root, true);   // largest iterator
-
+        BSTIterator left(root, false);   //next
+        BSTIterator right(root, true);   // before
         int i = left.next();
         int j = right.next();
-
         while (i < j) {
             int sum = i + j;
-
             if (sum == k)
                 return true;
-
             if (sum < k)
-                i = left.next();
+                i = left.next();  //give next element
             else
-                j = right.next();
+                j = right.next();  //give before element
         }
-
         return false;
     }
 };
