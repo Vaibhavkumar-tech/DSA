@@ -2,26 +2,34 @@ class Solution {
 public:
     bool checkValidString(string s) {
         int n=s.size();
-        int mino=0;
-        int maxi=0;
+        stack<int>open;
+        stack<int>star;
         for(int i=0;i<n;i++){
             if(s[i]=='('){
-                mino++;
-                maxi++;
+                open.push(i);
             }
-            else if(s[i]==')'){
-                mino--;
-                maxi--;
+            else if(s[i]=='*'){
+                star.push(i);
             }
             else{
-                mino--;
-                maxi++;
+                if(!open.empty()){
+                    open.pop();
+                }
+                else if(!star.empty()){
+                    star.pop();
+                }
+                else{
+                    return false;
+                }
             }
-            if(maxi<0){
-                return false;
-            }
-            mino=max(mino,0);
         }
-        return mino == 0;
+        while(!open.empty() && !star.empty()){
+            if(open.top()>star.top()){  //matlab * cannot be work close bracket
+               return false;
+            }
+            star.pop();
+            open.pop();
+        }
+        return open.empty();
     }
 };
