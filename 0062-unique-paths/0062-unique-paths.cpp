@@ -1,28 +1,23 @@
 class Solution {
 public:
-    int n,m;
-    int solve(vector<vector<int>>& grid,int i,int j){
-        if(i == m-1 && j == n-1) {
-            return 1;
-        }
-        if(i >= m || j >= n) {
-            return 0;
-        }
-
-        if(grid[i][j]!=-1){
-            return grid[i][j];
-        }
-        //down move
-        int downSide=solve(grid,i+1,j);
-        //right side
-        int rightSide=solve(grid,i,j+1);
-        return grid[i][j]=rightSide+downSide;
-    }
     int uniquePaths(int m, int n) {
-        this->m=m;
-        this->n=n;
-        //m*n
-        vector<vector<int>>grid(m,vector<int>(n,-1));
-        return solve(grid,0,0);
+        vector<vector<int>>dp(m,vector<int>(n,0));
+        dp[m-1][n-1]=1;
+        for(int i=m-1;i>=0;i--){
+            for(int j=n-1;j>=0;j--){
+                //downside
+                if(i==m-1 && j==n-1) continue;
+                int downside=0;
+                int rightside=0;
+               if(i+1<m){
+                downside=dp[i+1][j];
+               }
+               if(j+1<n){
+                rightside=dp[i][j+1];
+               }
+               dp[i][j]=downside+rightside;
+            }
+        }
+        return dp[0][0];
     }
 };
