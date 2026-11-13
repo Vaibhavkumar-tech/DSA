@@ -1,7 +1,7 @@
 
 class Solution {
 public:
-    int m, n;
+/*     int m, n;
     vector<vector<int>> dp;
     vector<vector<bool>> visited;
 
@@ -45,5 +45,31 @@ public:
         }
 
         return ans;
+    } */
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int>prev(n,0);
+        for(int i=0;i<n;i++){
+            prev[i]=matrix[m-1][i];
+        }
+        for(int i=m-2;i>=0;i--){
+            vector<int>curr(n,0);
+            for(int j=n-1;j>=0;j--){
+
+                int down = prev[j];
+                int left=INT_MAX;
+                int right=INT_MAX;
+                if(j>0){
+                left = prev[j-1];}
+                if(j<n-1){
+                right =prev[j+1]; }
+
+                curr[j] = matrix[i][j] +min({down, left, right});
+            }
+            prev=curr;
+        }
+        return *min_element(prev.begin(), prev.end());
     }
 };
