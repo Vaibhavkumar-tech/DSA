@@ -1,7 +1,7 @@
 class Solution {
 public:
     int n;
-    vector<vector<vector<int>>>dp;
+ //   vector<vector<vector<int>>>dp;
 /*     int solve(vector<int>& prices,int idx,int cap,int buy){
         if(cap==0) return 0;
         if(idx==n) return 0;
@@ -26,7 +26,8 @@ public:
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
         this->n=n;
-        dp.resize(n+1,vector<vector<int>>(2,vector<int>(3,0)));
+        vector<vector<int>>after(2,vector<int>(3,0));
+        vector<vector<int>>curr(2,vector<int>(3,0));
         //base cases
 /*         1.cap==0 then idx and buy can be anything return 0;
         2.idx==n then cap and buy can be anything alsways return 0; */
@@ -37,21 +38,22 @@ public:
                     int price;
                     if(buy==1){
                         price=max(
-                            -prices[idx]+dp[idx+1][0][cap],
-                            0+dp[idx+1][1][cap]
+                            -prices[idx]+after[0][cap],
+                            0+after[1][cap]
                         );
                     }
                     else{
                         price=max(
-                            prices[idx]+dp[idx+1][1][cap-1],
-                            0+dp[idx+1][0][cap]
+                            prices[idx]+after[1][cap-1],
+                            0+after[0][cap]
                         );
                     }
-                    dp[idx][buy][cap]=price;
+                    curr[buy][cap]=price;
                 }
             }
+            after=curr;
         }
-        return dp[0][1][2];
+        return after[1][2];
         
     }
 };
